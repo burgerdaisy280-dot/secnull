@@ -31,8 +31,8 @@ function Index() {
       let r = await fetchIp();
       if (!r.ip) {
         try {
-          const j = await (await fetch("https://ipapi.co/json/")).json();
-          r = { ip: j.ip, city: j.city, region: j.region, country: j.country_name, org: j.org };
+          const j = await (await fetch("https://ipwho.is/")).json();
+          r = { ip: j.ip, city: j.city, region: j.region, country: j.country, org: j.connection?.isp ?? j.connection?.org };
         } catch {
           /* keep server result */
         }

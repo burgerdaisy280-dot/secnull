@@ -7,15 +7,15 @@ export const getIpInfo = createServerFn({ method: "GET" }).handler(async () => {
   const base: { ip: string; city?: string; region?: string; country?: string; org?: string; error?: string } = { ip };
   if (!ip) return { ...base, error: "Could not determine your IP address." };
   try {
-    const res = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/json/`);
+    const res = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`);
     if (!res.ok) return base;
-    const j = (await res.json()) as Record<string, string>;
+    const j = (await res.json()) as { city?: string; region?: string; country?: string; connection?: { isp?: string; org?: string } };
     return {
       ip,
-      city: j["city"],
-      region: j["region"],
-      country: j["country_name"],
-      org: j["org"],
+      city: j.city,
+      region: j.region,
+      country: j.country,
+      org: j.connection?.isp ?? j.connection?.org,
     };
   } catch {
     return base;
