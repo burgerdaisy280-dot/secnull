@@ -5,7 +5,8 @@ const links = [
   { to: "/", label: "IP check" },
   { to: "/scanner", label: "Port scanner" },
   { to: "/capture", label: "Capture viewer" },
-  { to: "/vpn", label: "VPN setup" },
+  { to: "/vpn", label: "VPN" },
+  { to: "/unblock", label: "Web proxy" },
 ] as const;
 
 export function Shell({ title, lead, children }: { title: string; lead: string; children: ReactNode }) {

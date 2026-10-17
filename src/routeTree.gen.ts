@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaptureRouteImport } from './routes/capture'
 import { Route as ScannerRouteImport } from './routes/scanner'
+import { Route as UnblockRouteImport } from './routes/unblock'
 import { Route as VpnRouteImport } from './routes/vpn'
+import { Route as ApiPublicProxyRouteImport } from './routes/api/public/proxy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,9 +31,19 @@ const ScannerRoute = ScannerRouteImport.update({
   path: '/scanner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnblockRoute = UnblockRouteImport.update({
+  id: '/unblock',
+  path: '/unblock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VpnRoute = VpnRouteImport.update({
   id: '/vpn',
   path: '/vpn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicProxyRoute = ApiPublicProxyRouteImport.update({
+  id: '/api/public/proxy',
+  path: '/api/public/proxy',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,34 +51,50 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/capture': typeof CaptureRoute
   '/scanner': typeof ScannerRoute
+  '/unblock': typeof UnblockRoute
   '/vpn': typeof VpnRoute
+  '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/capture': typeof CaptureRoute
   '/scanner': typeof ScannerRoute
+  '/unblock': typeof UnblockRoute
   '/vpn': typeof VpnRoute
+  '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/capture': typeof CaptureRoute
   '/scanner': typeof ScannerRoute
+  '/unblock': typeof UnblockRoute
   '/vpn': typeof VpnRoute
+  '/api/public/proxy': typeof ApiPublicProxyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/capture' | '/scanner' | '/vpn'
+  fullPaths:
+    '/' | '/capture' | '/scanner' | '/unblock' | '/vpn' | '/api/public/proxy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/capture' | '/scanner' | '/vpn'
-  id: '__root__' | '/' | '/capture' | '/scanner' | '/vpn'
+  to: '/' | '/capture' | '/scanner' | '/unblock' | '/vpn' | '/api/public/proxy'
+  id:
+    | '__root__'
+    | '/'
+    | '/capture'
+    | '/scanner'
+    | '/unblock'
+    | '/vpn'
+    | '/api/public/proxy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CaptureRoute: typeof CaptureRoute
   ScannerRoute: typeof ScannerRoute
+  UnblockRoute: typeof UnblockRoute
   VpnRoute: typeof VpnRoute
+  ApiPublicProxyRoute: typeof ApiPublicProxyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +120,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScannerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/unblock': {
+      id: '/unblock'
+      path: '/unblock'
+      fullPath: '/unblock'
+      preLoaderRoute: typeof UnblockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vpn': {
       id: '/vpn'
       path: '/vpn'
       fullPath: '/vpn'
       preLoaderRoute: typeof VpnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/proxy': {
+      id: '/api/public/proxy'
+      path: '/api/public/proxy'
+      fullPath: '/api/public/proxy'
+      preLoaderRoute: typeof ApiPublicProxyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +148,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CaptureRoute: CaptureRoute,
   ScannerRoute: ScannerRoute,
+  UnblockRoute: UnblockRoute,
   VpnRoute: VpnRoute,
+  ApiPublicProxyRoute: ApiPublicProxyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
