@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CaptureRouteImport } from './routes/capture'
+import { Route as ScannerRouteImport } from './routes/scanner'
+import { Route as VpnRouteImport } from './routes/vpn'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaptureRoute = CaptureRouteImport.update({
+  id: '/capture',
+  path: '/capture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScannerRoute = ScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VpnRoute = VpnRouteImport.update({
+  id: '/vpn',
+  path: '/vpn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/capture': typeof CaptureRoute
+  '/scanner': typeof ScannerRoute
+  '/vpn': typeof VpnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/capture': typeof CaptureRoute
+  '/scanner': typeof ScannerRoute
+  '/vpn': typeof VpnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/capture': typeof CaptureRoute
+  '/scanner': typeof ScannerRoute
+  '/vpn': typeof VpnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/capture' | '/scanner' | '/vpn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/capture' | '/scanner' | '/vpn'
+  id: '__root__' | '/' | '/capture' | '/scanner' | '/vpn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CaptureRoute: typeof CaptureRoute
+  ScannerRoute: typeof ScannerRoute
+  VpnRoute: typeof VpnRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/capture': {
+      id: '/capture'
+      path: '/capture'
+      fullPath: '/capture'
+      preLoaderRoute: typeof CaptureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scanner': {
+      id: '/scanner'
+      path: '/scanner'
+      fullPath: '/scanner'
+      preLoaderRoute: typeof ScannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vpn': {
+      id: '/vpn'
+      path: '/vpn'
+      fullPath: '/vpn'
+      preLoaderRoute: typeof VpnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CaptureRoute: CaptureRoute,
+  ScannerRoute: ScannerRoute,
+  VpnRoute: VpnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
