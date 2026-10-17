@@ -64,7 +64,7 @@ function Packets() {
   const [rows, setRows] = useState<string[][]>([]);
   const capture = () => {
     const protos = ["TCP", "UDP", "DNS", "HTTP", "TLS"];
-    setRows(Array.from({ length: 12 }, (_, i) => [String(i + 1), `192.168.1.${10 + i}`, `10.0.0.${i * 3 + 1}`, protos[i % 5], `${60 + i * 37} bytes`]));
+    setRows(Array.from({ length: 12 }, (_, i) => [String(i + 1), `192.168.1.${10 + i}`, `10.0.0.${i * 3 + 1}`, protos[i % 5] ?? "TCP", `${60 + i * 37} bytes`]));
   };
   return (
     <Card title="Packet viewer (demo)">
