@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Info = Awaited<ReturnType<typeof getIpInfo>>;
+type Info = { ip: string; city?: string; region?: string; country?: string; org?: string; error?: string };
 
 function Index() {
   const fetchIp = useServerFn(getIpInfo);
@@ -28,7 +28,7 @@ function Index() {
   const run = async () => {
     setLoading(true);
     try {
-      let r = await fetchIp();
+      let r: Info = await fetchIp();
       if (!r.ip) {
         try {
           const j = await (await fetch("https://ipwho.is/")).json();

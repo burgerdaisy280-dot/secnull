@@ -8,7 +8,7 @@ const PORTS: [number, string][] = [
 ];
 
 export const scanHost = createServerFn({ method: "POST" })
-  .validator((input: { host: string }) => {
+  .inputValidator((input: { host: string }) => {
     const host = String(input.host ?? "").trim().toLowerCase();
     if (!/^[a-z0-9.-]{1,253}$/.test(host)) throw new Error("Enter a valid hostname or IP");
     if (/^(localhost|127\.|10\.|192\.168\.|169\.254\.|0\.)/.test(host) || /^172\.(1[6-9]|2\d|3[01])\./.test(host))
