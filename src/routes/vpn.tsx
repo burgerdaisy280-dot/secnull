@@ -46,7 +46,7 @@ function fmt(b: number) {
 function Vpn() {
   const ipFn = useServerFn(getIpInfo);
   const [realIp, setRealIp] = useState<string>("…");
-  const [sel, setSel] = useState(servers[0]);
+  const [sel, setSel] = useState(servers[0]!);
   const [state, setState] = useState<State>("off");
   const [log, setLog] = useState<string[]>([]);
   const [vip, setVip] = useState("");
@@ -105,7 +105,7 @@ function Vpn() {
       pc.createDataChannel("x");
       pc.onicecandidate = (e) => {
         const m = e.candidate?.candidate.match(/(\d{1,3}(\.\d{1,3}){3}|[a-f0-9:]{6,}|[\w-]+\.local)/i);
-        if (m) { found.add(m[1]); setLeak({ ips: [...found], done: false }); }
+        if (m) { found.add(m[1]!); setLeak({ ips: [...found], done: false }); }
       };
       await pc.setLocalDescription(await pc.createOffer());
       setTimeout(() => { pc.close(); setLeak({ ips: [...found], done: true }); }, 3000);
