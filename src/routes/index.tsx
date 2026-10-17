@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Info = { ip: string; city?: string; region?: string; country?: string; org?: string; error?: string };
+type Info = { ip: string; city?: string | undefined; region?: string | undefined; country?: string | undefined; org?: string | undefined; error?: string | undefined };
 
 function Index() {
   const fetchIp = useServerFn(getIpInfo);
