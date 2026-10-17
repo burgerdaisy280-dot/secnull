@@ -28,7 +28,16 @@ function Index() {
   const run = async () => {
     setLoading(true);
     try {
-      setInfo(await fetchIp());
+      let r = await fetchIp();
+      if (!r.ip) {
+        try {
+          const j = await (await fetch("https://ipapi.co/json/")).json();
+          r = { ip: j.ip, city: j.city, region: j.region, country: j.country_name, org: j.org };
+        } catch {
+          /* keep server result */
+        }
+      }
+      setInfo(r);
     } finally {
       setLoading(false);
     }
